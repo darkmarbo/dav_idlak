@@ -1,7 +1,7 @@
 
 
 
-OUT=bin
+OUT=vad_tools
 src=src
 INCLUDEDIR=-I $(src)
 LIBDIR=-lm
@@ -18,6 +18,7 @@ obj = \
 all: clean $(name)
 	rm -rf $(OUT) && mkdir -p $(OUT)
 	mv $(name) $(OUT)
+	cp vad.conf  $(OUT)
 	rm -rf *.o
 
 
