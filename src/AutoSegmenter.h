@@ -18,7 +18,9 @@ typedef struct tag_SEGMENT_ {
 } SEGMENT;
 
 typedef struct tag_INTENSITY_ {
+    // 窗中心对应的时间点(秒)
 	double stamp;
+    // 窗内平均能量值 10log10(平方和的平均/4e-10)
 	double value;
 } INTENSITY;
 
@@ -29,28 +31,38 @@ public:
 	~AutoSegmenter(void);
 
 public:
+
 	// 均值
 	double mean(vector<double> vArr);
+
 	// 方差
 	double variance(vector<double> vArr);
+
 	// 标准差
 	double stddev(vector<double> vArr);
+
 	// 合并音段
 	vector<SEGMENT> combine_utts(vector<SEGMENT> vSeg, double fMaxPause = 0.35);
+
 	// 添加预留
 	vector<SEGMENT> pad_utts(vector<SEGMENT> vSeg, double fWaveLen, double fHeadPad = 0.3, double fEndPad = 0.3);
+
 	// 根据音强计算音段
 	vector<SEGMENT>  seg_utts_by_Intensity(vector<INTENSITY>  vIntensity, double fThresholdCoef = 0.33);
+
 	// 计算音强
 	vector<INTENSITY> calcIntensity(short* pData = NULL, int nSamples = 0, double fMinPitch = 75, double fTimeStep = 0.0);
+
 	// 返回音段结果
 	vector<SEGMENT> getSegment(short* pData = NULL, int nSamples = 0, double fMinPitch = 75, double fTimeStep = 0.0, double fMaxPause = 0.35, double fThresholdCoef = 0.33, double fBeginPad = 0.3, double fEndPad = 0.3);
 
 public:
+
 	// extract from Praat NUM.cpp
 	double NUMbessel_i0_f (double x);
 
 public:
 	// 采样率
 	int m_nSampleRate;
+
 };
