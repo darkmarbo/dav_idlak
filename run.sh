@@ -8,6 +8,9 @@
 #done
 
 
-sox duianyoushenme.wav -t wav duianyoushenme_sox.wav
-./bin/vad   duianyoushenme_sox.wav
+#sox duianyoushenme.wav -t wav duianyoushenme_sox.wav
+dir_out=test_out
+rm -rf ${dir_out}  && mkdir -p ${dir_out}
+./bin/vad   test/duianyoushenme_sox.wav  ${dir_out}
+
 
