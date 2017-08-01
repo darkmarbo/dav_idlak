@@ -5,7 +5,8 @@ OUT=vad_tools
 src=src
 INCLUDEDIR=-I $(src)
 LIBDIR=-lm
-CPPFLAGS = -g -finline-functions -Wall -Winline -pipe
+#CPPFLAGS = -g -finline-functions -Wall -Winline -pipe
+CPPFLAGS = -g -finline-functions -Wall -Winline -pipe -Bstatic -lstdc++ -lsupc++  -Bdynamic
 name=vad
 GCC=g++
 
