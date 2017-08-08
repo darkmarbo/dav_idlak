@@ -1,4 +1,6 @@
 
+// g_vad  g_dynamic_match  
+//
 #ifndef H_COMMON
 #define H_COMMON
 

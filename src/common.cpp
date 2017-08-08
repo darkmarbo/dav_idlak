@@ -1,4 +1,6 @@
 
+// g_vad  g_dynamic_match  
+//
 #include"common.h"
 
 string&  trim(string& str)
@@ -14,6 +16,10 @@ string&  trim(string& str)
 	return str;
 }
 
+/*
+ * 使用字符dem 进行切分 
+ * 切分出的block>0 才插入 
+ * */
 void split(vector<string>& res, const string& input, const char dem)
 {
 	size_t pos = input.find(dem);
@@ -35,6 +41,10 @@ void split(vector<string>& res, const string& input, const char dem)
 	}
 }
 
+/*
+ * 使用 字符串dem 进行切分 
+ * 切分出的 block>0 才插入 
+ * */
 void split(vector<string>& res, const string& input, const string& dem)
 {
 	size_t pos = input.find(dem);

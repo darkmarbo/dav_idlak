@@ -117,7 +117,8 @@ int main(int argc, char *argv[])
 	{
         file_id++;
         char wav_name[1024] = {0};
-        snprintf(wav_name, 1024, "%06d.wav", file_id);
+        //snprintf(wav_name, 1024, "%06d.wav", file_id);
+        snprintf(wav_name, 1024, "%06d_%.4f_%.4f.wav", file_id, vSegs[j].begin, vSegs[j].end);
 
         snprintf(wav_out, 1024, "%s/%s", dir_out.c_str(), wav_name);
         fprintf(fp_log, "%s\t%.4f\t%.4f\n", wav_name, vSegs[j].begin, vSegs[j].end);
