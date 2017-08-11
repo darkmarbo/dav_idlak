@@ -1,4 +1,6 @@
 
+#pragma once
+
 // g_vad  g_dynamic_match  
 //
 #include"common.h"

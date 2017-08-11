@@ -11,6 +11,7 @@ name=vad
 GCC=g++
 
 obj = \
+	common.o \
 	WaveIO.o \
 	Config.o \
 	AutoSegmenter.o \
