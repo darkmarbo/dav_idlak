@@ -5,6 +5,8 @@
 #include"Config.h"
 
 
+int ms2s(string ms, double &s);
+
 int main(int argc, char *argv[])
 {
 
@@ -176,8 +178,12 @@ int main(int argc, char *argv[])
             {
                 break;
             }
-            time_st = atof(vec_line[2].c_str());
-            time_end = atof(vec_line[3].c_str());
+
+            // 0:49.5603  
+            ms2s(vec_line[2], time_st); 
+            ms2s(vec_line[3], time_end); 
+            //time_st = atof(vec_line[2].c_str());
+            //time_end = atof(vec_line[3].c_str());
 
             fprintf(stderr, "line=%s\n", line);
             fprintf(stderr, "wav_id=%s\ttime_st=%.4f\ttime_end=%.4f\n", 
@@ -215,6 +221,27 @@ int main(int argc, char *argv[])
 
 }
 
+/*
+ * ms="1:23.456"
+ * s=83.456
+ * */
+int ms2s(string ms, double &s)
+{
+    vector<string> vec_line;
+    split(vec_line, ms, ':');
+    if(vec_line.size() > 1)
+    {
+        s = atof(vec_line[0].c_str())*60 + atof(vec_line[1].c_str());
+    }
+    else
+    {
+        s = atof(vec_line[0].c_str());
+
+    }
+
+    return 0;
+
+}
 
 
 
