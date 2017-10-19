@@ -182,9 +182,9 @@ vector<INTENSITY> AutoSegmenter::calcIntensity(short* pData, int nSamples,
 	double halfWinDur = 0.5 * WinDur; // 0.427
 	int halfWinSample = (int)(halfWinDur * m_nSampleRate);
 
-	double ShiftDur = 0.8 / fMinPitch; // 0.8/75=0.1
-	if (fTimeStep != 0.0) 
-		ShiftDur = fTimeStep / fMinPitch;
+	double ShiftDur = 0.8 / fMinPitch; // 0.8/75=0.01  == 10ms
+	//if (fTimeStep != 0.0) 
+	//	ShiftDur = fTimeStep / fMinPitch;
 	int nShiftSample = (int)(ShiftDur * m_nSampleRate);
 
 	// 计算均值   szm 没有取绝对值?
