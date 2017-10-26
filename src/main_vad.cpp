@@ -17,8 +17,12 @@ int main(int argc, char *argv[])
     if(argc < 4)
     {
         printf("usage: %s  1  input_wav  output_directory\n", argv[0]);
+
+        printf("\n\t\t 大语音input_wav  对应时间点input_file 切分到output_directory\n");
         printf("usage: %s  2  input_wav  input_file  output_directory\n", argv[0]);
-        printf("\t\t 大语音input_wav  对应时间点input_file 切分到output_directory\n");
+
+        printf("\n 计算语音 Input_wav 的总时长 有效时长 等信息 输出到out_file中\n");
+        printf("usage: %s  3  input_wav  output_file \n", argv[0]);
         return 0;
     }
 
@@ -34,8 +38,8 @@ int main(int argc, char *argv[])
     double m_fMinSilence = 0.6;     // 最短句间静音长度
     double m_fThresholdCoef = 0.33; // Threshold coefficient
     int m_nChannelIdx = 0;          // 用于分隔通道序号
-    double m_fBeginPad = 0.3;       // 头静音长度
-    double m_fEndPad = 0.3;         // 尾静音长度
+    double m_fBeginPad = 0.0;       // 头静音长度
+    double m_fEndPad = 0.0;         // 尾静音长度
 
     getDouble(m_mapConfig, "MinPitch", m_fMinPitch);
     getDouble(m_mapConfig, "TimeStep", m_fTimeStep);
@@ -204,6 +208,41 @@ int main(int argc, char *argv[])
 
         if(fp_time){fclose(fp_time); fp_time = NULL;}
 
+
+    }
+    else if(flag == 3)
+    {
+
+        FILE *fp_log = fopen(argv[3],"a+");
+        if(fp_log == NULL)
+        {
+            printf("ERROR:打开语音文件失败!\n");
+            return 0;
+        }
+
+
+        // 5. do auto segment
+        AutoSegmenter segmenter(wav.getSampleRate());
+
+        vector<SEGMENT> vSegs = segmenter.getSegment(pData, nSamples, m_fMinPitch,
+                    m_fTimeStep, m_fMinSilence, m_fThresholdCoef, m_fBeginPad, m_fEndPad);
+
+
+        // 叠加 每一个有效语音段的时长 
+        double time_valid = 0.0;
+        for (unsigned int j=0; j<vSegs.size(); j++)
+        {
+            time_valid += (vSegs[j].end - vSegs[j].begin);
+        }
+
+        double time_all = double(wav.getSamples())/double(wav.getSampleRate()); 
+        double time_1 = vSegs[0].begin;
+        double time_2 = time_all - vSegs[vSegs.size()-1].end;
+
+        fprintf(fp_log, "%s\t%.3f\t%.3f\t%.3f\t%.3f\n", argv[2], time_valid, 
+                    time_1, time_2, time_all);
+
+        fclose(fp_log);
 
     }
 
